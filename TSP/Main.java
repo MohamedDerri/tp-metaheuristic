@@ -9,6 +9,7 @@ public class Main {
 						{7, 8, 9}};
 		Tsp	tsp = new Tsp(graph);
 		tsp.affichage();
+		tsp.gloutonTsp(0);
 	}
 	
 }
