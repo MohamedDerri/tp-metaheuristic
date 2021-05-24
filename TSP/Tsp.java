@@ -51,7 +51,10 @@ public class Tsp {
 			visited[nextCity]  = true;
 			path[++p] = "City " + nextCity;
 		}
-		System.out.println(nextCity);
+		for (int i = 0; i < path.length; i++) {
+			System.out.print(path[i] + " ");
+		}
+		System.out.println();
 	}
 }
 
