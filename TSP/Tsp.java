@@ -22,7 +22,7 @@ public class Tsp {
 	}
 
 	public int findMin(int currentCity, Boolean visited[]) {
-		int min = 1000000;
+		int min = 1001;
 		int indexOfMin = currentCity;
 		for (int i = 0; i < this.graph[currentCity].length; i++) {
 			if (i != currentCity && visited[i] == false && min > this.graph[currentCity][i]) {
@@ -30,6 +30,7 @@ public class Tsp {
 				indexOfMin = i;
 			}
 		}
+		System.out.println("min => " + min);
 		return indexOfMin;
 	} 
 
@@ -38,6 +39,7 @@ public class Tsp {
 		String	path[] = new String[this.graph.length + 1]; // point de depart + point d'arrivée
 		int p = 0;
 		int nextCity = start;
+		int totalDistance = 0;
 		
 		for (int i = 0; i < visited.length; i++) {
 			visited[i] = false;
@@ -48,13 +50,17 @@ public class Tsp {
 		visited[start] = true;
 		for (int i = 0; i < this.graph.length - 1 ; i++) {
 			nextCity = findMin(j, visited);
+			totalDistance += this.graph[j][nextCity];
+			j = nextCity;
 			visited[nextCity]  = true;
 			path[++p] = "City " + nextCity;
 		}
+		totalDistance += this.graph[j][start];
 		for (int i = 0; i < path.length; i++) {
 			System.out.print(path[i] + " ");
 		}
 		System.out.println();
+		System.out.println("total distance = " + totalDistance);
 	}
 }
 
