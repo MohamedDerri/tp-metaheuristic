@@ -1,4 +1,4 @@
-package SAC_A_DOS;
+package SAC_A_DOS_DESCENTE;
 
 import java.util.*;
 
@@ -11,8 +11,14 @@ public class SacDos {
 		this.object = object;
 		this.capacity = capacity;
 	}
+	public ArrayList<Object> getObject() {
+		return this.object;
+	} 
+	public int getCapacity() {
+		return this.capacity;
+	}
 	//-------------------methods-------------------------
-	void glouton1() {
+	public Solution glouton1() {
 
 		ArrayList<Boolean> taken = new ArrayList<Boolean>();
 		ArrayList<Double> fraction = new ArrayList<Double>();
@@ -42,7 +48,7 @@ public class SacDos {
 
 		System.out.println("==> " + taken);
 		System.out.println("the final value is " + finalValue);
-		// Solution solution = new Solution(taken, finalValue);
+		return (new Solution(taken, finalValue));
 		// return solution;
 
 	}
