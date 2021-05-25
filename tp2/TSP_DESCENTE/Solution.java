@@ -31,24 +31,12 @@ public class Solution {
 	public int[][] getGraph() {
 		return this.gr;
 	}
-	// public static int get_index(int c) {
-	// 	int i = 0;
-	// 	while (i < c.length()) {
-	// 		if (c.charAt(i) >= '0' )
-	// 		i++;
-	// 	}
-	// }
-	// public int calcDistfromPath() {
-	// 	int cnt = 0;
-	// 	for (int i = 0; i < this.path.length - 1; i++) {
-	// 		int index = this.path[i];
-	// 		int nextIndex = this.path[i + 1];
-	// 		cnt += this.gr[index][nextIndex];
-	// 	}
-	// 	return cnt;
-	// }
-	// public void setSolution(ArrayList<Boolean>	instance, int finalValue) {
-	// 	this.instance = instance;
-	// 	this.finalValue = finalValue;
-	// }
+	@Override
+    public String toString() {
+		String s = "";
+		for (int i = 0; i < this.path.length; i++) {
+			s += "" + this.path[i];
+		}
+        return s;
+    }
 }
