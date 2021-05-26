@@ -13,6 +13,15 @@ public class Main {
 		}
 		return cnt;
 	}
+
+	public static int calcWeightFromInstance(ArrayList<Boolean> inst, SacDos sacDos) {
+		int cnt = 0;
+		for (int i = 0; i < inst.size(); i++) {
+			if (inst.get(i) == true)
+				cnt += sacDos.getObject().get(i).getWeight();
+		}
+		return cnt;
+	}
 	public static ArrayList<Boolean>	  hamming(ArrayList<Boolean> oldInstance, int indexToChance) {
 		ArrayList<Boolean> ret = new ArrayList<>();
 		for (int i = 0; i < oldInstance.size(); i++) {
@@ -29,8 +38,8 @@ public class Main {
 		int i = 0;
 		System.out.println("generation des solutions voisinages par la methodes HAMMING: WORKED IN A => ");
 		while (i < sol.getInstance().size()) {
-			ArrayList<Boolean> newInstance = hamming(sol.getInstance(), i);///indice i a changer
-			double newFinalValue = calcValuefromInstance(newInstance, sacDos);//ArrayList<Object> for ret value in same indace of new instance 
+			ArrayList<Boolean> newInstance = hamming(sol.getInstance(),  i);///indice i a changer || hamming(newInstance)
+			int newFinalValue = calcValuefromInstance(newInstance, sacDos);//ArrayList<Object> for ret value in same indace of new instance 
 			list.add(new Solution(newInstance, newFinalValue));
 			i++;
 		}
@@ -38,15 +47,21 @@ public class Main {
 	}
 
 	public static Solution select(ArrayList<Solution> list, SacDos sacDos) {
-		double max = list.get(0).getFinalValue();
+		double max = calcValuefromInstance(list.get(0).getInstance(), sacDos);
 		Solution s = list.get(0);
+		System.out.println("max = " + max);
+		System.out.println("|||maxWeight :" + calcWeightFromInstance(list.get(0).getInstance(), sacDos));
+
+
 
 		for (int i = 1; i < list.size(); i++) {
-				System.out.println("|||capacitie of instance :" + calcValuefromInstance(list.get(i).getInstance(), sacDos));
-			if (max <  list.get(i).getFinalValue() && calcValuefromInstance(list.get(i).getInstance(), sacDos) <= sacDos.getCapacity())
+			System.out.println("|||capacity of instance :" + calcValuefromInstance(list.get(i).getInstance(), sacDos));
+			System.out.println("|||totalWeight of instance :" + calcWeightFromInstance(list.get(i).getInstance(), sacDos));
+			if (max <  calcValuefromInstance(list.get(i).getInstance(), sacDos) && calcWeightFromInstance(list.get(i).getInstance(), sacDos) <= sacDos.getCapacity())
 			{
 				s = list.get(i);
 				max = list.get(i).getFinalValue();
+				// System.out.println("max = " + max);
 			}
 		}
 		return s;
@@ -76,19 +91,19 @@ public class Main {
 		object.add(new Object(3, 1));
 		
 		SacDos sacDos = new SacDos(object, 15);
-		// Solution sol = sacDos.glouton1();
+		Solution sol = sacDos.glouton1();
 		///////////////////////////////////////
 
 		/////////////test BAAADDD
-		ArrayList<Boolean> arr = new ArrayList<Boolean>();
-		arr.add(true);
-		arr.add(true);
-		arr.add(true);
-		arr.add(true);
-		arr.add(true);
-		arr.add(true);
-		arr.add(true);
-		Solution sol = new Solution(arr, 64.0);
+		// ArrayList<Boolean> arr = new ArrayList<Boolean>();
+		// arr.add(true);
+		// arr.add(true);
+		// arr.add(true);
+		// arr.add(true);
+		// arr.add(true);
+		// arr.add(true);
+		// arr.add(true);
+		// Solution sol = new Solution(arr, 64.0);
 		///////////////////////////
 		//////////////DESCENT
 		int t = 0;
@@ -100,7 +115,7 @@ public class Main {
 			
 			System.out.println();
 			System.out.println("the value of the selected solution is : " + se.getFinalValue());
-			if (sol.getFinalValue() > se.getFinalValue())
+			if (sol.getFinalValue() > se.getFinalValue() && calcWeightFromInstance(sol.getInstance(), sacDos) >= calcWeightFromInstance(se.getInstance(), sacDos) )
 				break ;
 			sol = se;
 			t++;
