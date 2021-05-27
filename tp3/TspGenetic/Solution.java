@@ -17,7 +17,7 @@ public class Solution {
 
     public void afficheSolution() {
         for (int i = 0; i < this.path.length; i++) {
-            System.out.print("city" + this.path[i] + " ");
+            System.out.print(this.path[i] + " ");
         }
         System.out.println();
         System.out.println("total distance = " + this.totalDistance);

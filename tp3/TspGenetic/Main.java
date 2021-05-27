@@ -61,9 +61,11 @@ public class Main {
     }
 
     public static void initPopulation(int startIndex, int [][] graph) {
+        ArrayList<Solution> list = new ArrayList<>();
         int firstPath[] = new int[graph.length + 1];
         firstPath[graph.length] = startIndex;
         int temp;
+        // generating the path from witch we will produce the other paths
         for (int i = 0; i < graph.length; i++) {
             firstPath[i] = i;
         }
@@ -79,6 +81,29 @@ public class Main {
             System.out.print(firstPath[i] + " ");
         }
         System.out.println();
+
+        // producing the other paths, generating a whole population
+        for (int i = 0; i < graph.length + 1; i++) {
+            int swapIndex = (int)Math.floor(Math.random()*(firstPath.length - 2)+1);
+            int swapIndexT = (int)Math.floor(Math.random()*(firstPath.length - 2)+1);
+            int tmp = firstPath[swapIndex];
+            firstPath[swapIndex] = firstPath[swapIndexT];
+            firstPath[swapIndexT] = tmp;
+            int newDist = calcDistfromPath(firstPath, graph);
+            list.add(i, new Solution(firstPath, newDist, graph));
+            // for (int j = 0; j < graph.length + 1; j++) {
+            //     System.out.print(firstPath[j] + " ");
+            // }
+            // System.out.print("==> " + newDist);
+            // System.out.println();
+        }
+        System.out.println("the generated population is : ");
+        for (int i = 0; i < graph.length + 1; i++) {
+            list.get(i).afficheSolution();
+            System.out.println();
+        }
+        System.out.println();
+
     }
 
     public static void main(String[] args) {
