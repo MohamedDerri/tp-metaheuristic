@@ -60,7 +60,7 @@ public class Main {
             return Math.exp(((double)sol.getDist() - (double)se.getDist()) / T);
     }
 
-    public static void initPopulation(int startIndex, int [][] graph) {
+    public static ArrayList<Solution> initPopulation(int startIndex, int [][] graph) {
         ArrayList<Solution> list = new ArrayList<>();
         int firstPath[] = new int[graph.length + 1];
         firstPath[graph.length] = startIndex;
@@ -83,14 +83,18 @@ public class Main {
         System.out.println();
 
         // producing the other paths, generating a whole population
-        for (int i = 0; i < graph.length + 1; i++) {
+        for (int i = 0; i < (graph.length + 1 )* 30000; i++) {
             int swapIndex = (int)Math.floor(Math.random()*(firstPath.length - 2)+1);
             int swapIndexT = (int)Math.floor(Math.random()*(firstPath.length - 2)+1);
             int tmp = firstPath[swapIndex];
             firstPath[swapIndex] = firstPath[swapIndexT];
             firstPath[swapIndexT] = tmp;
             int newDist = calcDistfromPath(firstPath, graph);
-            list.add(i, new Solution(firstPath, newDist, graph));
+            int [] newPath = new int[firstPath.length];
+            for (int j = 0; j < firstPath.length; j++) {
+                newPath[j] = firstPath[j];
+            }
+            list.add(i, new Solution(newPath, newDist, graph));
             // for (int j = 0; j < graph.length + 1; j++) {
             //     System.out.print(firstPath[j] + " ");
             // }
@@ -98,13 +102,15 @@ public class Main {
             // System.out.println();
         }
         System.out.println("the generated population is : ");
-        for (int i = 0; i < graph.length + 1; i++) {
+        for (int i = 0; i < (graph.length + 1)*3000; i++) {
             list.get(i).afficheSolution();
             System.out.println();
         }
         System.out.println();
-
+        return list;
     }
+
+
 
     public static void main(String[] args) {
         int[][] graph = {{0, 5, 1000, 6, 1000, 4, 1000, 7},

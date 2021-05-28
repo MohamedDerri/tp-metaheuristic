@@ -14,12 +14,20 @@ public class Solution {
     }
 
     //-------------------methods-------------------------
+    @Override
+    public String toString() {
+        String s = "";
+        for (int i = 0; i < this.path.length; i++) {
+            s += "" + this.path[i];
+        }
+        return s;
+    }
 
     public void afficheSolution() {
         for (int i = 0; i < this.path.length; i++) {
             System.out.print(this.path[i] + " ");
         }
-        System.out.println();
+        // System.out.println();
         System.out.println("total distance = " + this.totalDistance);
     }
     public int getDist() {
@@ -30,14 +38,6 @@ public class Solution {
     }
     public int[][] getGraph() {
         return this.gr;
-    }
-    @Override
-    public String toString() {
-        String s = "";
-        for (int i = 0; i < this.path.length; i++) {
-            s += "" + this.path[i];
-        }
-        return s;
     }
 }
 
